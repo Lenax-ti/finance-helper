@@ -51,13 +51,16 @@ while selection:
 2 - Показать список категорий
 3 - Выход
 ''')
+                if category_error == '1':
+                    continue
+                    # Вернуться к началу цикла и попросит ввести категорию заново
 
-                if category_error == '2':
+                elif category_error == '2':
                     print(*log_book.keys(), sep='\n')
-                else:
-                    pass
+                    continue
+                    # Что бы снова спросить категорию
 
-                if category_error == '3':
+                elif category_error == '3':
                     print('Хорошего дня!')
                     break
 
