@@ -14,68 +14,75 @@ selection = input(menu)
 with open('My expenses.json', 'r') as f:
     log_book = json.load(f)
 
-# Нужно усовершенствовать код с помощью функций\классов
+
+def expenses(amount):
+
+    category = input('Напишите категорию трат: ')
+
+    if category in log_book:
+        log_book[category] += int(amount)
+        print("Сумма трат добавлена")
+    else:
+        log_book[category] = int(amount)
+        print('Новая категория добавлена')
+
+
+def full_balance():
+    for key, value in log_book.items():
+        print(key, value)
+
+
+def specific_balance():
+    select_category = input('Напишите категорию: ')
+    if select_category in log_book:
+        print(log_book[select_category])
+
+    else:
+        print('Такой категории не существует!')
+        print()
+        category_error = input('''Что дальше:
+1 - Ввести категорию заново
+2 - Посмотреть список категорий
+''')
+        if category_error == '2':
+
+            print(*log_book, sep='\n')
+            print()
+            specific_balance()
+        elif category_error == '1':
+            specific_balance()
+
+
 while selection:
-
     if selection == '1':
-        sm = input('Введите сумму: ')
-        if sm.isdigit():
-            category = input('Напишите категорию: ')
+        try:
+            sm = float(input('Введите сумму: '))
+            expenses(sm)
+            with open('My expenses.json', 'w') as file:
+                json.dump(log_book, file, indent=15)
 
-            if category in log_book:
-                log_book[category] += int(sm)
-            else:
-                log_book[category] = int(sm)
+            print()
             selection = input(menu)
-        else:
-            print('Сумма, должна быть числом!')
-            continue
+
+        except ValueError:
+            print('Сумма должна быть числом!')
 
 
     if selection == '2':
         question_about_balance = input('''Показать баланс:
-    1 - По конкретной категории
-    2 - По всем категориям
-    ''')
-
-        if question_about_balance == '1':
-            select_category = input('Напишите категорию: ')
-            if select_category in log_book:
-                print(log_book[select_category])
-                selection = input(menu)
-
-            else:
-                print('Категория указана не верно!')
-                category_error = input('''
-1 - Повторить ввод
-2 - Показать список категорий
-3 - Выход
+1 - По всем категориям
+2 - По конкретной категории
 ''')
-                if category_error == '1':
-                    continue
-                    # Вернуться к началу цикла и попросит ввести категорию заново
-
-                elif category_error == '2':
-                    print(*log_book.keys(), sep='\n')
-                    continue
-                    # Что бы снова спросить категорию
-
-                elif category_error == '3':
-                    print('Хорошего дня!')
-                    break
-
-        if question_about_balance == '2':
-            for key, value in log_book.items():
-                print(key, value)
+        if question_about_balance == '1':
+            full_balance()
             selection = input(menu)
 
+        elif question_about_balance == '2':
+            specific_balance()
+            selection = input(menu)
 
     if selection == '3':
-        print('Хорошего дня!')
         break
-
-with open('My expenses.json', 'w') as file:
-    json.dump(log_book, file, indent=15)
 
 
 
