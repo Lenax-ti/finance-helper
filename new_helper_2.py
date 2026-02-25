@@ -15,6 +15,14 @@ with open('My expenses.json', 'r') as f:
     log_book = json.load(f)
 
 
+def get_amount():
+    while True:
+        try:
+            return float(input('Введите сумму: '))
+
+        except ValueError:
+            print('Сумма должна быть числом!')
+
 def expenses(amount):
 
     category = input('Напишите категорию трат: ')
@@ -55,17 +63,16 @@ def specific_balance():
 
 while selection:
     if selection == '1':
-        try:
-            sm = float(input('Введите сумму: '))
-            expenses(sm)
-            with open('My expenses.json', 'w') as file:
-                json.dump(log_book, file, indent=15)
 
-            print()
-            selection = input(menu)
+        sm = get_amount()
+        expenses(sm)
+        with open('My expenses.json', 'w') as file:
+            json.dump(log_book, file, indent=15)
 
-        except ValueError:
-            print('Сумма должна быть числом!')
+        print()
+        selection = input(menu)
+
+
 
 
     if selection == '2':
