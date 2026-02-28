@@ -39,6 +39,29 @@ def full_balance():
     for key, value in log_book.items():
         print(key, value)
 
+
+def not_category():
+    print(' Такой категории не существует!')
+    print()
+    while True:
+        category_error = input('''Что дальше:
+ 1 - Ввести категорию заново
+ 2 - Посмотреть список категорий
+ ''')
+        if category_error == '2':
+
+            print(*log_book, sep='\n')
+            print()
+            break
+        elif category_error == '1':
+            print()
+            break
+        else:
+            print('Нет такой команды, попробуй снова!')
+            print()
+            continue
+
+
 # Вместо рекурсии использовать цикл while
 def specific_balance():
     while True:
@@ -48,20 +71,7 @@ def specific_balance():
             break
 
         else:
-            print('Такой категории не существует!')
-            print()
-            category_error = input('''Что дальше:
-    1 - Ввести категорию заново
-    2 - Посмотреть список категорий
-    ''')
-            if category_error == '2':
-
-                print(*log_book, sep='\n')
-                print()
-                continue
-            elif category_error == '1':
-                continue
-
+            not_category()
 
 while selection:
     if selection == '1':
