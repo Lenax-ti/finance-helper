@@ -28,10 +28,10 @@ def expenses(amount):
     category = input('Напишите категорию трат: ')
 
     if category in log_book:
-        log_book[category] += int(amount)
+        log_book[category] += float(amount)
         print("Сумма трат добавлена")
     else:
-        log_book[category] = int(amount)
+        log_book[category] = float(amount)
         print('Новая категория добавлена')
 
 
@@ -39,26 +39,28 @@ def full_balance():
     for key, value in log_book.items():
         print(key, value)
 
-
+# Вместо рекурсии использовать цикл while
 def specific_balance():
-    select_category = input('Напишите категорию: ')
-    if select_category in log_book:
-        print(log_book[select_category])
+    while True:
+        select_category = input('Напишите категорию: ')
+        if select_category in log_book:
+            print(log_book[select_category])
+            break
 
-    else:
-        print('Такой категории не существует!')
-        print()
-        category_error = input('''Что дальше:
-1 - Ввести категорию заново
-2 - Посмотреть список категорий
-''')
-        if category_error == '2':
-
-            print(*log_book, sep='\n')
+        else:
+            print('Такой категории не существует!')
             print()
-            specific_balance()
-        elif category_error == '1':
-            specific_balance()
+            category_error = input('''Что дальше:
+    1 - Ввести категорию заново
+    2 - Посмотреть список категорий
+    ''')
+            if category_error == '2':
+
+                print(*log_book, sep='\n')
+                print()
+                continue
+            elif category_error == '1':
+                continue
 
 
 while selection:
