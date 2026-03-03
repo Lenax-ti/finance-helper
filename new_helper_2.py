@@ -4,7 +4,8 @@ import json
 menu = '''Что вы хотите сделать?:
     1 - Записать расходы
     2 - Показать баланс
-    3 - Выйти
+    3 - Удаление категории
+    4 - Выйти
 '''
 
 selection = input(menu)
@@ -62,7 +63,7 @@ def not_category():
             continue
 
 
-# Вместо рекурсии использовать цикл while
+
 def specific_balance():
     while True:
         select_category = input('Напишите категорию: ')
@@ -72,6 +73,7 @@ def specific_balance():
 
         else:
             not_category()
+
 
 while selection:
     if selection == '1':
@@ -83,8 +85,6 @@ while selection:
 
         print()
         selection = input(menu)
-
-
 
 
     if selection == '2':
@@ -100,7 +100,27 @@ while selection:
             specific_balance()
             selection = input(menu)
 
-    if selection == '3':
+        else:
+            print('Нет такой команды, попробуй снова!')
+            print()
+
+
+    elif selection == '3':
+        print(*log_book, sep='\n')
+        del_category = input(f'''Какую категорию хотите удалить: 
+ ''')
+        if del_category in log_book:
+
+            log_book.pop(del_category)
+            print(f'Вы удалили категорию {del_category} ')
+            with open('My expenses.json', 'w') as file:
+                json.dump(log_book, file, indent=15)
+            print()
+            selection = input(menu)
+        else:
+            not_category()
+
+    if selection == '4':
         break
 
 
