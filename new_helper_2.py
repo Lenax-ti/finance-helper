@@ -109,7 +109,8 @@ while selection:
         print(*log_book, sep='\n')
         del_category = input(f'''Какую категорию хотите удалить: 
  ''')
-        if del_category in log_book:
+        yes_no = input(f'Вы уверены что хотите удалить категорию {del_category}? (Да\Нет): ')
+        if del_category in log_book and (yes_no == 'Да' or yes_no == 'да'):
 
             log_book.pop(del_category)
             print(f'Вы удалили категорию {del_category} ')
@@ -117,11 +118,20 @@ while selection:
                 json.dump(log_book, file, indent=15)
             print()
             selection = input(menu)
+        elif yes_no == 'Нет' or yes_no == 'нет':
+            continue
+        elif yes_no != 'Да' and yes_no != 'Нет':
+            print('Нет такой команды, повторите снова')
+            print()
         else:
             not_category()
 
     if selection == '4':
         break
 
+    else:
+        print('Нет такой команды, будьте внимательней!')
+        selection = input(menu)
+        print()
 
 
